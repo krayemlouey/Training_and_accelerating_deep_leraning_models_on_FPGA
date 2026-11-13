@@ -1,0 +1,75 @@
+# ============================================================
+# AI Clinical Tumor Tracker — Git Ignore Rules
+# Protection de la Propriété Intellectuelle & Données Sensibles
+# ============================================================
+
+# 1. Modèles IA & Poids Entraînés (Propriété Intellectuelle & Limite 100 Mo GitHub)
+*.onnx
+*.onnx.data
+*.pth
+*.pt
+*.h5
+*.tflite
+*.bin
+*.pkl
+*.whl
+models/
+pynq_ia/models/
+
+# 2. Données Médicales & Imagerie Clinique (Confidentialité RGPD / HIPAA)
+*.dcm
+*.nii
+*.nii.gz
+/scans/
+scans/
+*.jpg
+*.JPG
+*.jpeg
+*.png
+!docs/assets/*.png
+!docs/assets/*.jpg
+
+# 3. Sécurité, Clés SSH, Sessions & Fichiers Systèmes Personnels
+.ssh/
+.bash_history
+.bash_logout
+.profile
+.bashrc
+.sudo_as_admin_successful
+.lesshst
+.cache/
+.config/
+.local/
+*.log
+mri_system.log
+sds_trace_data.dat
+usb_pixels.txt
+scans.c
+
+# 4. Librairies Tierces & Notebooks Système PYNQ
+pynq/
+jupyter_notebooks/
+archive_anciens_scripts/
+pynq_ia/archive_anciens_scripts/
+
+# 5. Archives Lourdes (>100 Mo rejetées par GitHub)
+*.zip
+*.tar.gz
+pynq_ia_v3.zip
+
+# 6. Environnements Virtuels & Caches Compilés
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.venv/
+
+# 7. Sauvegardes & Fichiers Temporaires
+*.bak
+*.backup
+*.old*
+*~
+"aux _ grep python3"
+g
+PY
+REVISION

@@ -1,0 +1,16 @@
+[Unit]
+Description=PYNQ IA Clinical Tumor Tracker — Autonomous Edge-AI Medical Daemon
+After=network.target pynq-overlay-preload.service
+Requires=pynq-overlay-preload.service
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/xilinx/pynq_ia
+ExecStartPre=/bin/sleep 3
+ExecStart=/bin/bash /home/xilinx/pynq_ia/start.sh
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
