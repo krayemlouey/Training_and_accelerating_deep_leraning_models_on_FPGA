@@ -1,17 +1,13 @@
-# AI Clinical Tumor Tracker — Xilinx PYNQ-Z2 (Zynq-7020)
+𝗧𝗿𝗮𝗶𝗻𝗶𝗻𝗴 𝗮𝗻𝗱 𝗔𝗰𝗰𝗲𝗹𝗲𝗿𝗮𝘁𝗶𝗻𝗴 𝗗𝗲𝗲𝗽 𝗟𝗲𝗮𝗿𝗻𝗶𝗻𝗴 𝗠𝗼𝗱𝗲𝗹𝘀 𝗼𝗻 𝗙𝗣𝗚𝗔 𝗳𝗼𝗿 𝗕𝗿𝗮𝗶𝗻 𝗧𝘂𝗺𝗼𝗿 𝗖𝗹𝗮𝘀𝘀𝗶𝗳𝗶𝗰𝗮𝘁𝗶𝗼𝗻 
 ### Dispositif Médical Autonome Edge-AI pour le Diagnostic Oncologique Cérébral en Temps Réel
 **Architecture Hétérogène • Co-Design PS/PL • BRAM Partagée Double-Port • Programmation Parallèle AMP • Tri-Modèles IA Soft-Voting**
+<img width="960" height="1146" alt="WhatsApp Image 2026-1-29 at 1 39 49 PM" src="https://github.com/user-attachments/assets/476a469c-fe0d-44ef-b26a-eb521efea74c" />
+<img width="960" height="1250" alt="WhatsApp Image 2026-10-29 at 1 9 47 PM" src="https://github.com/user-attachments/assets/fe8aa4e5-f1d8-4a68-ac86-6ca81f83e10f" />
+<img width="960" height="1280" alt="WhatsApp Image 202610-29 at 1 39 48 PM" src="https://github.com/user-attachments/assets/e42f83ea-f163-4cba-8af2-3282a0c532b7" />
 
----
 
-[![Target Hardware](https://img.shields.io/badge/SoC-Xilinx%20Zynq--7020%20(XC7Z020)-red.svg?style=flat-square&logo=xilinx)](https://www.xilinx.com/)
-[![FPGA Architecture](https://img.shields.io/badge/FPGA-Artix--7%20Logic-blue.svg?style=flat-square)](https://www.xilinx.com/)
-[![Embedded OS](https://img.shields.io/badge/OS-PYNQ%20Ubuntu%20Linux%20(ARMv7l)-orange.svg?style=flat-square&logo=ubuntu)](http://www.pynq.io/)
-[![Deep Learning Inference](https://img.shields.io/badge/Runtime-ONNX%20Runtime%20ARM32-green.svg?style=flat-square&logo=onnx)](https://onnxruntime.ai/)
-[![Memory Ceiling](https://img.shields.io/badge/Memory%20Budget-512%20MB%20DDR3%20(Flat%20424MB%20RSS)-purple.svg?style=flat-square)](#5-ingénierie-mémoire-avancée--parade-anti-oom-sous-512-mo)
-[![Glioma Sensitivity](https://img.shields.io/badge/Clinical%20Sensitivity-98.8%25%20(Glioma%20Fail--Safe)-critical.svg?style=flat-square)](#6-pipeline-ia-tri-modèles--sécurité-clinique-fail-safe)
-[![Total Latency](https://img.shields.io/badge/Inference%20Latency-1.38s%20%2F%20scan%20(8ms%20cache)-informational.svg?style=flat-square)](#8-métriques-de-validation-industrielle--banc-dessai)
-[![Author](https://img.shields.io/badge/Author-Louey%20Krayem-black.svg?style=flat-square)](#auteur--contact)
+
+
 
 ---
 
@@ -427,77 +423,6 @@ Les tests d'endurance ont été validés sur banc de test sous conditions hospit
 >
 > Ce dépôt public expose les **spécifications d'ingénierie, diagrammes d'architecture, entêtes de communication C/Python et protocoles de synchronisation**. Le code source complet et les modèles quantifiés peuvent être mis à disposition sur demande motivée pour des évaluations académiques ou industrielles.
 
-### 9.1 Arborescence du Projet
-
-```
-ai-clinical-tumor-tracker/
-├── README.md                      # Documentation technique exhaustive d'ingénierie système
-├── .gitignore                     # Filtrage des poids ONNX, données médicales et clés sensibles
-├── config/
-│   └── pynq_ia.service            # Unité de service Systemd pour lancement autonome au boot
-├── src/
-│   ├── firmware/
-│   │   ├── tft_mri_ui.c           # Code source MicroBlaze C (Bit-Banging & SPI tactile)
-│   │   └── tft_mri_ui.h           # Définition des registres MMIO et masques de broches
-│   ├── drivers/
-│   │   └── lcd_driver.c           # Pilote bas niveau d'écran ILI9341
-│   ├── pipeline/
-│   │   ├── image_preprocessing.py # Pipeline CLAHE CIE LAB et Skull Stripping
-│   │   └── clinical_decision.py   # Règle de décision fail-safe et pondération soft-voting
-│   └── host/
-│       └── live_usb_clinical_final.py # Démon applicatif maître sous ARM Linux Ubuntu
-└── docs/
-    ├── architecture_specs.md      # Spécifications détaillées des bus AXI et de la BRAM
-    └── diagrams/                  # Diagrammes formels de flux et de séquence
-```
-
----
-
-## 10. Guide de Déploiement & Commandes Git
-
-### 10.1 Déploiement sur Carte Xilinx PYNQ-Z2
-
-```bash
-# 1. Cloner le dépôt sur votre environnement de développement
-git clone https://github.com/<votre-utilisateur>/ai-clinical-tumor-tracker.git
-cd ai-clinical-tumor-tracker
-
-# 2. Installation du démon système sur la carte PYNQ-Z2
-sudo cp config/pynq_ia.service /etc/systemd/system/pynq_ia.service
-sudo systemctl daemon-reload
-sudo systemctl enable pynq_ia.service
-sudo systemctl start pynq_ia.service
-
-# 3. Vérification de l'état du service
-systemctl status pynq_ia.service
-```
-
-### 10.2 Commandes pour Pousser ce Dépôt sur GitHub
-
-```bash
-# Initialiser le dépôt local
-git init
-
-# Vérifier que les fichiers lourds et données sensibles sont bien ignorés
-git status
-
-# Ajouter les fichiers de documentation, d'architecture et de code
-git add .gitignore README.md config/ src/ docs/
-
-# Créer le commit inaugural
-git commit -m "feat: initial commit of AI Clinical Tumor Tracker system architecture"
-
-# Lier votre dépôt GitHub (Privé ou Public selon votre choix de visibilité)
-git remote add origin https://github.com/<votre-utilisateur>/ai-clinical-tumor-tracker.git
-git branch -M main
-
-# Pousser sur GitHub
-git push -u origin main
-```
-
----
-
-## Auteur & Contact
 
 * **Concepteur & Développeur Principal :** **Louey Krayem**
 * **Spécialisation :** Ingénierie Systèmes Embarqués, Architecture SoC/FPGA (Xilinx Zynq), Co-Design Matériel/Logiciel & Edge-AI
